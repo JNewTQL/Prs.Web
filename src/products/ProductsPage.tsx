@@ -6,11 +6,11 @@ import ProductCardSkeleton from "./ProductCardSkeleton";
 import { Link } from "react-router-dom";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import toast from "react-hot-toast";
+import ProductList from "./ProductList";
 
 function ProductsPage() {
   const [loading, setLoading] = useState(false);
   const [products, setProducts] = useState<IProduct[]>([]);
-  const productCardSkeletons = Array.from(Array(12), (_value, index) => <ProductCardSkeleton key={index} />);
 
   async function loadProducts() {
     setLoading(true);
@@ -42,13 +42,8 @@ function ProductsPage() {
           </svg>
           Create A Product
         </Link>
-      </div>{" "}
-      <section className="list d-flex flex-row flex-wrap bg-light gap-5 p-4 rounded-4">
-        {loading && productCardSkeletons}
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} onRemove={removeProduct} />
-        ))}
-      </section>
+      </div>
+      <ProductList products={products} loading={loading} onRemove={removeProduct} />
     </section>
   );
 }

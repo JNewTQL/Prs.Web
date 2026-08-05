@@ -24,9 +24,6 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
           </svg>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item as={Link} to={`/vendors/detail/${vendor.id}`}>
-            View
-          </Dropdown.Item>
           <Dropdown.Item as={Link} to={`/vendors/edit/${vendor.id}`}>
             Edit
           </Dropdown.Item>
