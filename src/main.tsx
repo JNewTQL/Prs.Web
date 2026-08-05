@@ -6,6 +6,7 @@ import "./index.css";
 import IndexPage from "./IndexPage";
 import App from "./App";
 import ErrorPage from "./ErrorPage";
+import SignInPage from "./account/SignInPage";
 
 const router = createBrowserRouter([
   {
@@ -13,12 +14,12 @@ const router = createBrowserRouter([
     element: <App />, // outer wrapper — holds Context + Toaster
     errorElement: <ErrorPage />, // moved up here from the Layout route
     children: [
-      // { path: "signin", element: <SignInPage /> }, // sibling of Layout → no shell
+      { path: "signin", element: <SignInPage /> },
       {
         element: <Layout />,
         children: [
           { index: true, element: <IndexPage /> },
-          // { path: "menuitems", element: <MenuItemsPage /> },
+          { path: "signin", element: <SignInPage /> },
         ],
       },
     ],
