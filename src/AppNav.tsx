@@ -19,32 +19,36 @@ function AppNav() {
           Requests
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item as="li">
-        <Nav.Link eventKey="/products" as={Link} to="/products">
-          <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
-            <use xlinkHref={`${bootstrapIcons}#journal-text`} />
-          </svg>
-          Products
-        </Nav.Link>
-      </Nav.Item>
       {user?.isAdmin && (
         <Nav.Item as="li">
-          <Nav.Link eventKey="/vendors" as={Link} to="/vendors">
+          <Nav.Link eventKey="/products" as={Link} to="/products">
             <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
-              <use xlinkHref={`${bootstrapIcons}#people`} />
+              <use xlinkHref={`${bootstrapIcons}#grid`} />
+            </svg>
+            Products
+          </Nav.Link>
+        </Nav.Item>
+      )}
+      {user?.isAdmin && (
+        <Nav.Item as="li">
+          <Nav.Link eventKey="/vendors" as={Link} to="vendors">
+            <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
+              <use xlinkHref={`${bootstrapIcons}#building`} />
             </svg>
             Vendors
           </Nav.Link>
         </Nav.Item>
       )}
-      <Nav.Item as="li">
-        <Nav.Link eventKey="/users" as={Link} to="/users">
-          <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
-            <use xlinkHref={`${bootstrapIcons}#clipboard2`} />
-          </svg>
-          Users
-        </Nav.Link>
-      </Nav.Item>
+      {user?.isAdmin && (
+        <Nav.Item as="li">
+          <Nav.Link eventKey="/users" as={Link} to="/users">
+            <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
+              <use xlinkHref={`${bootstrapIcons}#people`} />
+            </svg>
+            Users
+          </Nav.Link>
+        </Nav.Item>
+      )}
     </Nav>
   );
 }

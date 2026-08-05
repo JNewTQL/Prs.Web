@@ -26,6 +26,9 @@ const getRoleLabel = (user: IUser) => {
 function UserCard({ user, onRemove }: IUserCardProps) {
   return (
     <div className="card p-4" style={{ width: "23rem" }}>
+      <div className="progress">
+        <div className="progress-bar bg-primary-subtle" role="progressbar" style={{ width: "30%" }} />
+      </div>
       <Dropdown className="d-inline position-absolute top-0 end-0 m-3">
         <Dropdown.Toggle className="btn btn-light border-0" style={{ background: "none" }}>
           <svg className="bi pe-none" width={20} height={20} fill="#007aff">

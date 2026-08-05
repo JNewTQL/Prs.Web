@@ -13,6 +13,9 @@ import UserEditPage from "./users/UserEditPage";
 import VendorPage from "./vendors/VendorPage";
 import VendorCreatePage from "./vendors/VendorCreatePage";
 import VendorEditPage from "./vendors/VendorEditPage";
+import ProductCreatePage from "./products/ProductCreatePage";
+import ProductEditPage from "./products/ProductEditPage";
+import ProductsPage from "./products/ProductsPage";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,9 @@ const router = createBrowserRouter([
           { path: "vendors", element: <VendorPage /> },
           { path: "vendors/create", element: <VendorCreatePage /> },
           { path: "vendors/edit/:id", element: <VendorEditPage /> },
+          { path: "products", element: <ProductsPage /> },
+          { path: "products/create", element: <ProductCreatePage /> },
+          { path: "products/edit/:id", element: <ProductEditPage /> },
         ],
       },
     ],

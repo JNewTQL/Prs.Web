@@ -30,7 +30,7 @@ function SignInPage() {
       const { password: _, ...safeUser } = await userAPI.findByAccount(account.username, account.password);
       persistUser(safeUser as IUser); // localStorage
       setUser(safeUser as IUser); // context
-      navigate("/orders");
+      navigate("/users");
     } catch (error: any) {
       toast.error("Unsuccessful sign in. Please try again.");
     }
