@@ -44,7 +44,7 @@ function UserForm() {
       return;
     }
     toast.success("Successfully saved.");
-    navigate("/user");
+    navigate("/users");
   };
 
   return (
@@ -128,7 +128,7 @@ function UserForm() {
         </div>
       </div>
       <div className="d-flex justify-content-end w-100 mt-4">
-        <Link to="/user" className="btn btn-outline-primary me-2">
+        <Link to="/users" className="btn btn-outline-primary me-2">
           Cancel
         </Link>
         <button type="submit" className="btn btn-primary">
