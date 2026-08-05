@@ -11,6 +11,8 @@ import UserPage from "./users/UserPage";
 import UserCreatePage from "./users/UserCreatePage";
 import UserEditPage from "./users/UserEditPage";
 import VendorPage from "./vendors/VendorPage";
+import VendorCreatePage from "./vendors/VendorCreatePage";
+import VendorEditPage from "./vendors/VendorEditPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,8 @@ const router = createBrowserRouter([
           { path: "users/create", element: <UserCreatePage /> },
           { path: "users/edit/:id", element: <UserEditPage /> },
           { path: "vendors", element: <VendorPage /> },
+          { path: "vendors/create", element: <VendorCreatePage /> },
+          { path: "vendors/edit/:id", element: <VendorEditPage /> },
         ],
       },
     ],

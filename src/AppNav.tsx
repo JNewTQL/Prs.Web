@@ -12,7 +12,7 @@ function AppNav() {
         Purchase
       </Nav.Item>
       <Nav.Item as="li">
-        <Nav.Link eventKey="/orders" as={Link} to="/orders">
+        <Nav.Link eventKey="/requests" as={Link} to="/requests">
           <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
             <use xlinkHref={`${bootstrapIcons}#cart`} />
           </svg>
@@ -20,7 +20,7 @@ function AppNav() {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item as="li">
-        <Nav.Link eventKey="/menuitems" as={Link} to="/menuitems">
+        <Nav.Link eventKey="/products" as={Link} to="/products">
           <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
             <use xlinkHref={`${bootstrapIcons}#journal-text`} />
           </svg>
@@ -29,7 +29,7 @@ function AppNav() {
       </Nav.Item>
       {user?.isAdmin && (
         <Nav.Item as="li">
-          <Nav.Link eventKey="/user" as={Link} to="/user">
+          <Nav.Link eventKey="/vendors" as={Link} to="/vendors">
             <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
               <use xlinkHref={`${bootstrapIcons}#people`} />
             </svg>
@@ -38,7 +38,7 @@ function AppNav() {
         </Nav.Item>
       )}
       <Nav.Item as="li">
-        <Nav.Link eventKey="/categories" as={Link} to="/categories">
+        <Nav.Link eventKey="/users" as={Link} to="/users">
           <svg className="bi pe-none me-2" width={16} height={16} fill="currentColor">
             <use xlinkHref={`${bootstrapIcons}#clipboard2`} />
           </svg>

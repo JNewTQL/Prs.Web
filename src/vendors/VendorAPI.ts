@@ -1,7 +1,7 @@
-import { checkStatus, parseJSON } from "../utility/fetchUtilities";
+import { BASE_URL, checkStatus, parseJSON } from "../utility/fetchUtilities";
 import { IVendor } from "./IVendor";
 
-const url = "${BASE_URL}/categories";
+const url = `${BASE_URL}/vendors`;
 
 export const vendorAPI = {
   list(): Promise<IVendor[]> {
