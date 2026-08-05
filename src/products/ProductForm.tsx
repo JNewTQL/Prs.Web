@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
@@ -84,8 +84,6 @@ function ProductForm() {
           <div className="invalid-feedback">{errors?.name?.message}</div>
         </div>
       </div>
-
-      {/* Row 2: Price, Unit, Vendor */}
       <div className="d-flex gap-3 mb-5">
         <div className="w-25">
           <label htmlFor="price" className="form-label text-muted">

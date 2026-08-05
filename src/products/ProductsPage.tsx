@@ -1,8 +1,6 @@
-import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
 import type { IProduct } from "./IProduct";
 import { productAPI } from "./ProductAPI";
-import ProductCardSkeleton from "./ProductCardSkeleton";
 import { Link } from "react-router-dom";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import toast from "react-hot-toast";
