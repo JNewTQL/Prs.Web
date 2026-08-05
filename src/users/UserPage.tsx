@@ -37,17 +37,17 @@ function UserPage() {
     <section className="content container-fluid mx-5 my-2 py-4">
       <div className="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom border-2">
         <h2>User ({users.length})</h2>
-        <Link to="/staff/create" className="btn btn-primary">
+        <Link to="/users/create" className="btn btn-primary">
           <svg className="bi pe-none me-2" width={32} height={32} fill="#FFFFFF">
             <use xlinkHref={`${bootstrapIcons}#plus`} />
           </svg>
-          Add User Member
+          Add User
         </Link>
       </div>
 
       <section className="list d-flex flex-row flex-wrap bg-light gap-5 p-4 rounded-4">
         {loading && userCardSkeletons}
-        {!loading && users.map((staffMember) => <UserCard key={staffMember.id} staff={staffMember} onRemove={removeUser} />)}
+        {!loading && users.map((user) => <UserCard key={user.id} user={user} onRemove={removeUser} />)}
       </section>
     </section>
   );

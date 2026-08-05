@@ -28,12 +28,12 @@ function UserCard({ user, onRemove }: IUserCardProps) {
     <div className="card p-4" style={{ width: "23rem" }}>
       <Dropdown className="d-inline position-absolute top-0 end-0 m-3">
         <Dropdown.Toggle className="btn btn-light border-0" style={{ background: "none" }}>
-          <svg className="bi pe-none" width={20} height={20} fill="#ff9100">
+          <svg className="bi pe-none" width={20} height={20} fill="#007aff">
             <use xlinkHref={`${bootstrapIcons}#three-dots-vertical`} />
           </svg>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Dropdown.Item as={Link} to={`/user/edit/${user.id}`}>
+          <Dropdown.Item as={Link} to={`/users/edit/${user.id}`}>
             Edit
           </Dropdown.Item>
           <Dropdown.Item
@@ -59,11 +59,8 @@ function UserCard({ user, onRemove }: IUserCardProps) {
       <span className="fs-4 fw-bolder">
         {user.firstName} {user.lastName}
       </span>
-      <span className="fs-6 fw-light">{user.username}</span>
+      <div className="mb-1">{getRoleLabel(user)}</div>
       <span className="fs-6 fw-light">{formatPhoneNumber(user.phone) || "—"}</span>
-      <span className="fs-6 fw-light">{user.email || "—"}</span>
-
-      <div>{getRoleLabel(user)}</div>
     </div>
   );
 }

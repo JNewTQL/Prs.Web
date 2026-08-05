@@ -7,6 +7,9 @@ import IndexPage from "./IndexPage";
 import App from "./App";
 import ErrorPage from "./ErrorPage";
 import SignInPage from "./account/SignInPage";
+import UserPage from "./users/UserPage";
+import UserCreatePage from "./users/UserCreatePage";
+import UserEditPage from "./users/UserEditPage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +23,9 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <IndexPage /> },
           { path: "signin", element: <SignInPage /> },
+          { path: "users", element: <UserPage /> },
+          { path: "users/create", element: <UserCreatePage /> },
+          { path: "users/edit/:id", element: <UserEditPage /> },
         ],
       },
     ],
