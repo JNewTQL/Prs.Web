@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { IUser } from "./IUser";
 import { userAPI } from "./UserAPI";
-import UserCard from "./UserCard";
-import UserCardSkeleton from "./UserCardSkeleton";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import toast from "react-hot-toast";
+import UserList from "./UserList";
 
 function UserPage() {
   const [loading, setLoading] = useState(false);
@@ -31,8 +30,6 @@ function UserPage() {
     loadUser();
   }, []);
 
-  const userCardSkeletons = Array.from(Array(12), (_v, i) => <UserCardSkeleton key={i} />);
-
   return (
     <section className="content container-fluid mx-5 my-2 py-4">
       <div className="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom border-2">
@@ -45,10 +42,7 @@ function UserPage() {
         </Link>
       </div>
 
-      <section className="list d-flex flex-row flex-wrap bg-light gap-5 p-4 rounded-4">
-        {loading && userCardSkeletons}
-        {!loading && users.map((user) => <UserCard key={user.id} user={user} onRemove={removeUser} />)}
-      </section>
+      <UserList users={users} loading={loading} onRemove={removeUser} />
     </section>
   );
 }

@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import type { IVendor } from "./IVendor";
 import { vendorAPI } from "./VendorAPI";
-import VendorCard from "./VendorCard";
-import VendorCardSkeleton from "./VendorCardSkeleton";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import toast from "react-hot-toast";
+import VendorList from "./VendorList";
 
 function VendorPage() {
   const [loading, setLoading] = useState(false);
@@ -33,8 +32,6 @@ function VendorPage() {
     loadVendor();
   }, []);
 
-  const vendorCardSkeletons = Array.from(Array(12), (_v, i) => <VendorCardSkeleton key={i} />);
-
   return (
     <section className="content container-fluid mx-5 my-2 py-4">
       <div className="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom border-2">
@@ -47,10 +44,7 @@ function VendorPage() {
         </Link>
       </div>
 
-      <section className="list d-flex flex-row flex-wrap bg-light gap-5 p-4 rounded-4">
-        {loading && vendorCardSkeletons}
-        {!loading && vendors.map((vendor) => <VendorCard key={vendor.id} vendor={vendor} onRemove={removeVendor} />)}
-      </section>
+      <VendorList vendors={vendors} loading={loading} onRemove={removeVendor} />
     </section>
   );
 }
