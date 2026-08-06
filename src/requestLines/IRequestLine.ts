@@ -1,0 +1,11 @@
+import { IProduct } from "../products/IProduct";
+import { IRequest } from "../requests/IRequest";
+
+export interface IRequestLine {
+  id: number | undefined;
+  quantity: number;
+  requestId: number | undefined;
+  productId: number | undefined;
+  product: IProduct | undefined;
+  request: IRequest | undefined;
+}

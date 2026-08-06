@@ -16,19 +16,24 @@ import VendorEditPage from "./vendors/VendorEditPage";
 import ProductCreatePage from "./products/ProductCreatePage";
 import ProductEditPage from "./products/ProductEditPage";
 import ProductsPage from "./products/ProductsPage";
+import RequestCreatePage from "./requests/RequestCreatePage";
+import RequestEditPage from "./requests/RequestEditPage";
+import RequestsPage from "./requests/RequestsPage";
+import RequestDetailPage from "./requests/RequestDetailPage";
+import RequestLineCreatePage from "./requestLines/RequestLineCreatePage";
+import RequestLineEditPage from "./requestLines/RequestLineEditPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />, // outer wrapper — holds Context + Toaster
-    errorElement: <ErrorPage />, // moved up here from the Layout route
+    element: <App />,
+    errorElement: <ErrorPage />,
     children: [
       { path: "signin", element: <SignInPage /> },
       {
         element: <Layout />,
         children: [
           { index: true, element: <IndexPage /> },
-          { path: "signin", element: <SignInPage /> },
           { path: "users", element: <UserPage /> },
           { path: "users/create", element: <UserCreatePage /> },
           { path: "users/edit/:id", element: <UserEditPage /> },
@@ -38,6 +43,12 @@ const router = createBrowserRouter([
           { path: "products", element: <ProductsPage /> },
           { path: "products/create", element: <ProductCreatePage /> },
           { path: "products/edit/:id", element: <ProductEditPage /> },
+          { path: "requests", element: <RequestsPage /> },
+          { path: "requests/create", element: <RequestCreatePage /> },
+          { path: "requests/edit/:id", element: <RequestEditPage /> },
+          { path: "requests/detail/:id", element: <RequestDetailPage /> },
+          { path: "requests/detail/:id/requestline/create", element: <RequestLineCreatePage /> },
+          { path: "requests/detail/:id/requestline/edit/:lineId", element: <RequestLineEditPage /> },
         ],
       },
     ],

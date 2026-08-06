@@ -1,0 +1,29 @@
+import { checkStatus, parseJSON } from "../utility/fetchUtilities";
+import { IRequestLine } from "./IRequestLine";
+
+const url = "http://localhost:5038/api/requestlines";
+
+export const requestLineAPI = {
+  find(id: number): Promise<IRequestLine> {
+    return fetch(`${url}/${id}`).then(checkStatus).then(parseJSON);
+  },
+  post(requestLine: IRequestLine): Promise<IRequestLine> {
+    return fetch(url, {
+      method: "POST",
+      body: JSON.stringify(requestLine),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then(checkStatus)
+      .then(parseJSON);
+  },
+  put(requestLine: IRequestLine) {
+    return fetch(`${url}/${requestLine.id}`, {
+      method: "PUT",
+      body: JSON.stringify(requestLine),
+      headers: { "Content-Type": "application/json" },
+    });
+  },
+  delete(id: number) {
+    return fetch(`${url}/${id}`, { method: "DELETE" });
+  },
+};
