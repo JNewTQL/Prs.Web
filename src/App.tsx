@@ -30,7 +30,7 @@ function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <Toaster
         toastOptions={{
-          success: { iconTheme: { primary: "#FF7A00", secondary: "white" } },
+          success: { iconTheme: { primary: "#007aff", secondary: "white" } },
           style: { maxWidth: 500 },
         }}
       />
