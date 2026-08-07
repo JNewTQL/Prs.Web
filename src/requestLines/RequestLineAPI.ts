@@ -21,9 +21,9 @@ export const requestLineAPI = {
       method: "PUT",
       body: JSON.stringify(requestLine),
       headers: { "Content-Type": "application/json" },
-    });
+    }).then(checkStatus);
   },
   delete(id: number) {
-    return fetch(`${url}/${id}`, { method: "DELETE" });
+    return fetch(`${url}/${id}`, { method: "DELETE" }).then(checkStatus);
   },
 };

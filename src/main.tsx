@@ -7,7 +7,7 @@ import IndexPage from "./IndexPage";
 import App from "./App";
 import ErrorPage from "./ErrorPage";
 import SignInPage from "./account/SignInPage";
-import UserPage from "./users/UserPage";
+import UserPage from "./users/UsersPage";
 import UserCreatePage from "./users/UserCreatePage";
 import UserEditPage from "./users/UserEditPage";
 import VendorsPage from "./vendors/VendorsPage";
@@ -47,8 +47,8 @@ const router = createBrowserRouter([
           { path: "requests/create", element: <RequestCreatePage /> },
           { path: "requests/edit/:id", element: <RequestEditPage /> },
           { path: "requests/detail/:id", element: <RequestDetailPage /> },
-          { path: "requests/detail/:id/requestline/create", element: <RequestLineCreatePage /> },
-          { path: "requests/detail/:id/requestline/edit/:lineId", element: <RequestLineEditPage /> },
+          { path: "requests/detail/:id/requestlines/create", element: <RequestLineCreatePage /> },
+          { path: "requests/detail/:id/requestlines/edit/:lineId", element: <RequestLineEditPage /> },
         ],
       },
     ],

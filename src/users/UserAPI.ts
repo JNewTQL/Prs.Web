@@ -9,7 +9,7 @@ export const userAPI = {
     return fetch(`${url}${query}`).then(checkStatus).then(parseJSON);
   },
   delete(id: number) {
-    return fetch(`${url}/${id}`, { method: "DELETE" });
+    return fetch(`${url}/${id}`, { method: "DELETE" }).then(checkStatus);
   },
   find(id: number): Promise<IUser> {
     return fetch(`${url}/${id}`).then(checkStatus).then(parseJSON);

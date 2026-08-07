@@ -32,7 +32,7 @@ function RequestLineTable({ request, onDeleteClick }: RequestLineTableProps) {
               <td>{money(Number(line.product?.price ?? 0) * line.quantity)}</td>
               <td>
                 <div className="d-flex gap-3">
-                  <Link to={`/requests/detail/${request.id}/requestline/edit/${line.id}`} className="text-primary text-decoration-none">
+                  <Link to={`/requests/detail/${request.id}/requestlines/edit/${line.id}`} className="text-primary text-decoration-none">
                     <svg width={16} height={16} fill="currentColor">
                       <use xlinkHref={`${bootstrapIcons}#pencil`} />
                     </svg>
@@ -50,7 +50,7 @@ function RequestLineTable({ request, onDeleteClick }: RequestLineTableProps) {
         <tfoot>
           <tr>
             <td>
-              <Link to={`/requests/detail/${request.id}/requestline/create`} className="btn btn-outline-primary d-inline-flex align-items-center gap-2">
+              <Link to={`/requests/detail/${request.id}/requestlines/create`} className="btn btn-outline-primary d-inline-flex align-items-center gap-2">
                 <svg width={18} height={18} fill="currentColor">
                   <use xlinkHref={`${bootstrapIcons}#plus-circle`} />
                 </svg>

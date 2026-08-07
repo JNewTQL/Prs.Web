@@ -19,7 +19,6 @@ export async function checkStatus(response: Response) {
     url: response.url,
     body: await response.text(),
   };
-  console.log(`http error status: ${JSON.stringify(httpError, null, 1)}`);
   throw new Error(translateStatusToErrorMessage(httpError.status));
 }
 
