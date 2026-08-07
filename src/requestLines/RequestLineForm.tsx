@@ -76,7 +76,7 @@ function RequestLineForm() {
     <form className="form w-50" onSubmit={handleSubmit(save)}>
       <div className="card p-4">
         <h5 className="card-title">
-          <strong>Line Item</strong>
+          <strong>Item</strong>
         </h5>
 
         <div className="mb-3">

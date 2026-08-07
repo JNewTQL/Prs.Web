@@ -2,7 +2,7 @@ import { useEffect, useState, SyntheticEvent } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import type { IRequest } from "./IRequest";
 import { requestAPI } from "./RequestAPI";
-import RequestRow from "./RequestRow";
+import RequestTable from "./RequestTable";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import toast from "react-hot-toast";
 
@@ -40,45 +40,14 @@ function RequestsPage() {
       <div className="d-flex justify-content-between align-items-center pb-4 mb-4 border-bottom border-2">
         <h2 className="border-2">Requests ({requests.length})</h2>
         <Link to="/requests/create" className="btn btn-primary">
-          <svg className="bi pe-none me-2" width={20} height={20} fill="#FFFFFF">
+          <svg className="bi pe-none me-2" width={32} height={32} fill="#FFFFFF">
             <use xlinkHref={`${bootstrapIcons}#plus`} />
           </svg>
-          Add Request
+          Create A Request
         </Link>
       </div>
 
-      <section className="list bg-body-tertiary p-4 rounded-4">
-        <select id="status" className="form-select w-auto mb-3" value={searchParams.get("status") ?? ""} onChange={handleStatusChange}>
-          <option value="">All</option>
-          <option value="NEW">New</option>
-          <option value="REVIEW">Review</option>
-          <option value="APPROVED">Approved</option>
-          <option value="REJECTED">Rejected</option>
-        </select>
-        {loading && <p className="text-muted">Loading requests...</p>}
-
-        {!loading && (
-          <table className="table table-hover w-100 rounded-4">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Description</th>
-                <th scope="col">Justification</th>
-                <th scope="col">Status</th>
-                <th scope="col">Total</th>
-                <th scope="col">Requested By</th>
-                <th scope="col">Delivery Mode</th>
-                <th scope="col"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((request) => (
-                <RequestRow key={request.id} request={request} onRemove={removeRequest} />
-              ))}
-            </tbody>
-          </table>
-        )}
-      </section>
+      <RequestTable requests={requests} loading={loading} currentStatus={searchParams.get("status") ?? ""} onStatusChange={handleStatusChange} onRemove={removeRequest} />
     </section>
   );
 }

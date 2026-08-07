@@ -63,9 +63,16 @@ function ProductForm() {
           <input
             id="number"
             type="text"
+            maxLength={20}
             placeholder="Enter product number"
             className={`form-control ${errors?.partNumber ? "is-invalid" : ""}`}
-            {...register("partNumber", { required: "Product Number is required." })}
+            {...register("partNumber", {
+              required: "Product Number is required.",
+              maxLength: {
+                value: 20,
+                message: "Product Number cannot exceed 20 characters.",
+              },
+            })}
           />
           <div className="invalid-feedback">{errors?.partNumber?.message}</div>
         </div>

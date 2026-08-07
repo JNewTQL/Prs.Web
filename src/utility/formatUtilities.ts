@@ -8,6 +8,8 @@ export function getTextBackgroundByStatus(status: string) {
       return "text-bg-success";
     case "REJECTED":
       return "text-bg-danger";
+    case "Rejected":
+      return "text-bg-danger";
     default:
       return "";
   }

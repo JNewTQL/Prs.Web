@@ -17,7 +17,7 @@ function ProductCard({ product, onRemove }: IProductCardProps) {
         <div className="progress-bar bg-primary-subtle" role="progressbar" style={{ width: "30%" }} />
       </div>
 
-      <div className="d-flex justify-content-between align-items-start">
+      <div className="d-flex justify-content-between align-items-start mt-3">
         <span className="fs-4 fw-bolder">{product.name}</span>
 
         <Dropdown>
@@ -38,7 +38,7 @@ function ProductCard({ product, onRemove }: IProductCardProps) {
                 if (confirm("Are you sure you want to delete this product?") && product.id) {
                   try {
                     await productAPI.delete(product.id);
-                    onRemove(product); // update parent state
+                    onRemove(product);
                     toast.success("Successfully deleted.");
                   } catch (error: any) {
                     toast.error(error.message, { duration: 6000 });
@@ -55,7 +55,7 @@ function ProductCard({ product, onRemove }: IProductCardProps) {
         <span className="fs-5">${product.price} </span>
         <span className="text-muted mx-1">/{product.unit.toLowerCase()}</span>
       </div>
-      <div className="mt-5">
+      <div className="mt-5 mb-3">
         <span className="text-muted mx-1">{product.vendor?.name}</span>
         <br />
         <span className="badge text-secondary bg-primary-subtle">{product.partNumber}</span>

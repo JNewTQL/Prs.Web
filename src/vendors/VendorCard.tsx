@@ -15,7 +15,7 @@ function VendorCard({ vendor, onRemove }: IVendorCardProps) {
   return (
     <div className="card p-4" style={{ width: "23rem" }}>
       <div className="progress">
-        <div className="progress-bar bg-primary-subtle" role="progressbar" style={{ width: "30%" }} />
+        <div className="progress-bar bg-primary" role="progressbar" style={{ width: "65%" }} />
       </div>
       <Dropdown className="d-inline position-absolute top-0 end-0 m-3">
         <Dropdown.Toggle className="btn btn-light border-0" style={{ background: "none" }}>

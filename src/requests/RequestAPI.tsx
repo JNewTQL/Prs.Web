@@ -38,7 +38,7 @@ export const requestAPI = {
   },
 
   review(request: IRequest) {
-    return fetch(`${url}/review/${request.id}`, {
+    return fetch(`${url}/${request.id}/review`, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: { "Content-Type": "application/json" },
@@ -46,7 +46,7 @@ export const requestAPI = {
   },
 
   approve(request: IRequest) {
-    return fetch(`${url}/approve/${request.id}`, {
+    return fetch(`${url}/${request.id}/approve`, {
       method: "PUT",
       body: JSON.stringify(request),
       headers: { "Content-Type": "application/json" },
@@ -54,9 +54,9 @@ export const requestAPI = {
   },
 
   reject(request: IRequest) {
-    return fetch(`${url}/reject/${request.id}`, {
+    return fetch(`${url}/${request.id}/reject`, {
       method: "PUT",
-      body: JSON.stringify(request),
+      body: JSON.stringify(request.rejectionReason),
       headers: { "Content-Type": "application/json" },
     }).then(checkStatus);
   },

@@ -15,16 +15,20 @@ function RequestRow({ request, onRemove }: IRequestRowProps) {
   return (
     <tr>
       <th scope="row">{request.id}</th>
-      <td>{request.description}</td>
-      <td className="text-body-secondary small text-wrap">{request.justification || "—"}</td>
+      <td>
+        <div className="fw-medium">{request.description}</div>
+        <div className="text-body-secondary small text-wrap">{request.justification || "—"}</div>
+      </td>
       <td>
         <span className={`badge ${getTextBackgroundByStatus(request.status)}`}>{request.status}</span>
       </td>
       <td>{money(request.total)}</td>
       <td>
-        {request.user?.firstName} {request.user?.lastName}
+        <div className="fw-medium">
+          {request.user?.firstName} {request.user?.lastName}
+        </div>
+        <div className="text-body-secondary small">{request.deliveryMode}</div>
       </td>
-      <td>{request.deliveryMode}</td>
       <td>
         <Dropdown className="d-inline">
           <Dropdown.Toggle className="btn btn-light border-0" style={{ background: "none" }}>
@@ -34,7 +38,7 @@ function RequestRow({ request, onRemove }: IRequestRowProps) {
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item as={Link} to={`/requests/detail/${request.id}`}>
-              View
+              Review
             </Dropdown.Item>
             <Dropdown.Item as={Link} to={`/requests/edit/${request.id}`}>
               Edit

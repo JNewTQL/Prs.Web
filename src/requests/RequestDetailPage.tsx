@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import type { IRequest } from "./IRequest";
 import { requestAPI } from "./RequestAPI";
 import RequestHeader from "./RequestHeader";
+import RequestLineTable from "../requestLines/RequestLineTable";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Modal } from "react-bootstrap";
-import { money } from "../utility/formatUtilities";
 import type { IRequestLine } from "../requestLines/IRequestLine";
 import { requestLineAPI } from "../requestLines/RequestLineAPI";
 import { useUserContext } from "../App";
@@ -19,6 +19,8 @@ interface IRejectForm {
 function RequestDetailPage() {
   const { user } = useUserContext();
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [request, setRequest] = useState<IRequest | undefined>(undefined);
 
@@ -42,7 +44,7 @@ function RequestDetailPage() {
 
     setIsRejectOpen(false);
     toast.success("Request rejected.");
-    await loadRequest();
+    navigate("/requests");
   };
 
   const [lineToDelete, setLineToDelete] = useState<IRequestLine | undefined>(undefined);
@@ -64,7 +66,11 @@ function RequestDetailPage() {
   async function loadRequest() {
     setLoading(true);
     try {
-      setRequest(await requestAPI.find(Number(id)));
+      const data = await requestAPI.find(Number(id));
+      if (data && data.status) {
+        data.status = data.status.toUpperCase();
+      }
+      setRequest(data);
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -78,7 +84,7 @@ function RequestDetailPage() {
     try {
       await requestAPI.review(request);
       toast.success("Status updated to Review.");
-      await loadRequest();
+      navigate("/requests");
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -92,7 +98,7 @@ function RequestDetailPage() {
     try {
       await requestAPI.approve(request);
       toast.success("Request approved.");
-      await loadRequest();
+      navigate("/requests");
     } catch (error: any) {
       toast.error(error.message);
     } finally {
@@ -108,7 +114,7 @@ function RequestDetailPage() {
   const isReviewer = user?.isReviewer;
 
   return (
-    <section className="content container-fluid mx-5 my-2 py-4">
+    <section className="content container-fluid px-3 px-md-5 my-2 py-4">
       <Modal show={isRejectOpen} onHide={closeReject}>
         <Modal.Header closeButton>
           <Modal.Title>Reject Request</Modal.Title>
@@ -156,27 +162,33 @@ function RequestDetailPage() {
         </Modal.Body>
       </Modal>
 
-      <div className="d-flex justify-content-between pb-4 mb-4 border-bottom border-2">
-        <h2>Request</h2>
-        <div className="d-flex justify-content-end gap-2">
-          {isOwnRequest && request?.status === "NEW" && (
-            <>
-              <Link to={`/requests/edit/${request.id}`} className="btn">
-                <svg className="me-2" width={16} height={16}>
-                  <use xlinkHref={`${bootstrapIcons}#pencil`} />
-                </svg>
-              </Link>
-              <button className="btn btn-primary" onClick={sendToReview}>
-                Review
-              </button>
-            </>
+      <div className="d-flex flex-wrap justify-content-between align-items-center pb-4 mb-4 border-bottom border-2 gap-3">
+        <h2 className="mb-0">Request</h2>
+
+        <div className="d-flex flex-wrap align-items-center justify-content-end gap-2">
+          <Link to={`/requests/edit/${request?.id}`} className="text-primary text-decoration-none me-2" title="Edit Request">
+            <svg width={18} height={18} fill="currentColor">
+              <use xlinkHref={`${bootstrapIcons}#pencil`} />
+            </svg>
+          </Link>
+
+          {request?.status === "NEW" && (
+            <button className="btn btn-primary" onClick={sendToReview}>
+              Send For Review
+            </button>
           )}
-          {isReviewer && !isOwnRequest && request?.status === "REVIEW" && (
+
+          {request?.status === "REVIEW" && (isReviewer || isOwnRequest) && (
             <>
-              <button className="btn btn-success" onClick={approveRequest}>
+              {isOwnRequest && (
+                <div className="alert alert-warning py-1 px-3 mb-0 me-2" role="alert">
+                  You cannot approve or reject your own request.
+                </div>
+              )}
+              <button className="btn btn-success" onClick={approveRequest} disabled={isOwnRequest}>
                 Approve
               </button>
-              <button className="btn btn-outline-danger" onClick={openReject}>
+              <button className="btn btn-outline-danger" onClick={openReject} disabled={isOwnRequest}>
                 Reject
               </button>
             </>
@@ -186,60 +198,7 @@ function RequestDetailPage() {
 
       {loading && <p>Loading…</p>}
       {request && <RequestHeader request={request} />}
-
-      {request && (
-        <div className="card p-4 mt-5">
-          <h5 className="card-title">Request Lines</h5>
-          <table className="table w-75">
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Amount</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {request.requestLines?.map((line) => (
-                <tr key={line.id}>
-                  <td>{line.product?.name}</td>
-                  <td>{money(Number(line.product?.price ?? 0))}</td>
-                  <td>{line.quantity}</td>
-                  <td>{money(Number(line.product?.price ?? 0) * line.quantity)}</td>
-                  <td>
-                    {isOwnRequest && request.status === "NEW" && (
-                      <>
-                        <Link to={`/requests/detail/${request.id}/requestline/edit/${line.id}`} className="btn btn-outline-primary btn-sm me-2">
-                          Edit
-                        </Link>
-                        <button type="button" className="btn btn-outline-danger btn-sm" onClick={() => handleShowDeleteItemModal(line)}>
-                          Delete
-                        </button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>
-                  {isOwnRequest && request.status === "NEW" && (
-                    <Link to={`/requests/detail/${request.id}/requestline/create`} className="btn btn-outline-primary">
-                      Add Product
-                    </Link>
-                  )}
-                </td>
-                <td />
-                <td className="fw-bold text-end">Total:</td>
-                <td className="fw-bold">{money(request.total)}</td>
-                <td />
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-      )}
+      {request && <RequestLineTable request={request} onDeleteClick={handleShowDeleteItemModal} />}
     </section>
   );
 }

@@ -15,20 +15,18 @@ function RequestHeader({ request }: IRequestHeaderProps) {
         <dd>{request.justification || "—"}</dd>
       </dl>
       <dl>
+        <dt>Delivery Method</dt>
+        <dd>{request.deliveryMode}</dd>
         <dt>Status</dt>
         <dd>
           <span className={`badge ${getTextBackgroundByStatus(request.status)}`}>{request.status}</span>
         </dd>
-        <dt>Total</dt>
-        <dd>{new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(request.total)}</dd>
       </dl>
       <dl>
-        <dt>Assigned User</dt>
+        <dt>Requested By</dt>
         <dd>
           {request.user?.firstName} {request.user?.lastName}
         </dd>
-        <dt>Delivery Mode</dt>
-        <dd>{request.deliveryMode}</dd>
         {request.status === "REJECTED" && (
           <>
             <dt>Rejection Reason</dt>

@@ -7,7 +7,7 @@ function IndexPage() {
   const { user } = useUserContext();
   useEffect(() => {
     if (!user) navigate("/signin");
-    else navigate("/orders");
+    else navigate("/requests");
   }, []);
   return null;
 }

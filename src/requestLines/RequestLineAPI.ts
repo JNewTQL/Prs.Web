@@ -1,7 +1,7 @@
-import { checkStatus, parseJSON } from "../utility/fetchUtilities";
+import { BASE_URL, checkStatus, parseJSON } from "../utility/fetchUtilities";
 import { IRequestLine } from "./IRequestLine";
 
-const url = "http://localhost:5038/api/requestlines";
+const url = `${BASE_URL}/requestlines`;
 
 export const requestLineAPI = {
   find(id: number): Promise<IRequestLine> {

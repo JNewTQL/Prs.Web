@@ -40,7 +40,7 @@ function VendorPage() {
           <svg className="bi pe-none me-2" width={32} height={32} fill="#FFFFFF">
             <use xlinkHref={`${bootstrapIcons}#plus`} />
           </svg>
-          Add Vendor
+          Create A Vendor
         </Link>
       </div>
 

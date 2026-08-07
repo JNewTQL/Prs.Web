@@ -29,6 +29,6 @@ export const productAPI = {
       .then(parseJSON);
   },
   delete(id: number) {
-    return fetch(`${url}/${id}`, { method: "DELETE" }).then(checkStatus); // no parseJSON — no body
+    return fetch(`${url}/${id}`, { method: "DELETE" }).then(checkStatus);
   },
 };

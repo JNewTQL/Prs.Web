@@ -42,7 +42,6 @@ function VendorForm() {
 
   return (
     <form className="w-100" onSubmit={handleSubmit(save)} noValidate>
-      {/* Code & Name */}
       <div className="d-flex gap-3 mb-3">
         <div className="w-25">
           <label htmlFor="code" className="form-label text-muted">
@@ -51,7 +50,8 @@ function VendorForm() {
           <input
             id="code"
             type="text"
-            placeholder="Enter short vendor..."
+            placeholder="Enter short vendor code"
+            maxLength={7}
             className={`form-control ${errors.code ? "is-invalid" : ""}`}
             {...register("code", { required: "Vendor Code is required." })}
           />
@@ -164,13 +164,7 @@ function VendorForm() {
           <label htmlFor="phone" className="form-label text-muted">
             Phone
           </label>
-          <input
-            id="phone"
-            type="tel"
-            placeholder="Enter phone number"
-            className={`form-control ${errors.phone ? "is-invalid" : ""}`}
-            {...register("phone", { required: "Phone number is required." })}
-          />
+          <input id="phone" type="tel" placeholder="Enter phone number" className={`form-control ${errors.phone ? "is-invalid" : ""}`} {...register("phone")} />
           <div className="invalid-feedback">{errors.phone?.message}</div>
         </div>
 
@@ -184,9 +178,8 @@ function VendorForm() {
             placeholder="Enter email address"
             className={`form-control ${errors.email ? "is-invalid" : ""}`}
             {...register("email", {
-              required: "Email is required.",
               pattern: {
-                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                value: /^$|^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                 message: "Please enter a valid email address.",
               },
             })}
