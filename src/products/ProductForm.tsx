@@ -1,12 +1,11 @@
 import { useNavigate, useParams } from "react-router-dom";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
 import { IProduct } from "./IProduct";
-import { IVendor } from "../vendors/IVendor";
 import { productAPI } from "./ProductAPI";
 import { vendorAPI } from "../vendors/VendorAPI";
 import toast from "react-hot-toast";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 const emptyProduct: IProduct = {
   id: undefined,
@@ -21,37 +20,58 @@ const emptyProduct: IProduct = {
 function ProductForm() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
-  const [vendors, setVendors] = useState<IVendor[]>([]);
+  const queryClient = useQueryClient();
 
-  async function loadVendors() {
-    setVendors(await vendorAPI.list());
-  }
+  const { data: vendors = [], isLoading: vendorsLoading } = useQuery({
+    queryKey: ["vendors"],
+    queryFn: vendorAPI.list,
+  });
+
+  const { data: product, isLoading: productLoading } = useQuery({
+    queryKey: ["products", Number(id)],
+    queryFn: () => productAPI.find(Number(id)),
+    enabled: !!id,
+  });
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<IProduct>({
-    defaultValues: async () => {
-      await loadVendors();
-      if (!id) return emptyProduct;
-      return await productAPI.find(Number(id));
+    values: product ?? emptyProduct,
+  });
+
+  const saveMutation = useMutation({
+    mutationFn: async (productToSave: IProduct) => {
+      productToSave.vendorId = Number(productToSave.vendorId);
+      delete productToSave.vendor;
+
+      if (productToSave.id) {
+        return await productAPI.put(productToSave);
+      } else {
+        return await productAPI.post(productToSave);
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Successfully saved.");
+      navigate("/products");
     },
   });
 
-  const save: SubmitHandler<IProduct> = async (product) => {
-    try {
-      product.vendorId = Number(product.vendorId);
-      delete product.vendor;
-      if (!product.id) await productAPI.post(product);
-      else await productAPI.put(product);
-    } catch (error: any) {
-      toast.error(error.message, { duration: 6000 });
-      return;
-    }
-    toast.success("Successfully saved.");
-    navigate("/products");
+  const save: SubmitHandler<IProduct> = (productToSave) => {
+    saveMutation.mutate(productToSave);
   };
+
+  if (vendorsLoading || productLoading) {
+    return (
+      <div className="d-flex justify-content-center p-5">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form className="w-100" onSubmit={handleSubmit(save)} noValidate>
@@ -145,11 +165,11 @@ function ProductForm() {
         <button type="button" className="btn btn-outline-primary px-4" onClick={() => navigate("/products")}>
           Cancel
         </button>
-        <button type="submit" className="btn btn-primary px-4 d-flex align-items-center gap-2" disabled={isSubmitting}>
+        <button type="submit" className="btn btn-primary px-4 d-flex align-items-center gap-2" disabled={saveMutation.isPending}>
           <svg className="bi pe-none" width={16} height={16} fill="#FFFFFF">
             <use xlinkHref={`${bootstrapIcons}#save`} />
           </svg>
-          {isSubmitting ? "Saving..." : "Save product"}
+          {saveMutation.isPending ? "Saving..." : "Save product"}
         </button>
       </div>
     </form>
