@@ -181,7 +181,7 @@ function RequestDetailPage() {
           {request?.status === "REVIEW" && (isReviewer || isOwnRequest) && (
             <>
               {isOwnRequest && (
-                <div className="alert alert-warning py-1 px-3 mb-0 me-2" role="alert">
+                <div className="alert alert-warning py-1 px-2 mb-0 me-2" role="alert">
                   You cannot approve or reject your own request.
                 </div>
               )}
