@@ -4,13 +4,23 @@ import { IProduct } from "./IProduct";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface IProductCardProps {
   product: IProduct;
-  onRemove: (product: IProduct) => void;
 }
 
-function ProductCard({ product, onRemove }: IProductCardProps) {
+function ProductCard({ product }: IProductCardProps) {
+  const queryClient = useQueryClient();
+
+  const deleteMutation = useMutation({
+    mutationFn: productAPI.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      toast.success("Successfully deleted.");
+    },
+  });
+
   return (
     <div className="card p-4" style={{ width: "23rem" }}>
       <div className="progress">
@@ -33,16 +43,10 @@ function ProductCard({ product, onRemove }: IProductCardProps) {
             <Dropdown.Item
               as="a"
               href="#"
-              onClick={async (event) => {
+              onClick={(event) => {
                 event.preventDefault();
                 if (confirm("Are you sure you want to delete this product?") && product.id) {
-                  try {
-                    await productAPI.delete(product.id);
-                    onRemove(product);
-                    toast.success("Successfully deleted.");
-                  } catch (error: any) {
-                    toast.error(error.message, { duration: 6000 });
-                  }
+                  deleteMutation.mutate(product.id);
                 }
               }}
             >

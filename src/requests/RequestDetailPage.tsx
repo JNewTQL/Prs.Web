@@ -144,7 +144,6 @@ function RequestDetailPage() {
           </form>
         </Modal.Body>
       </Modal>
-
       <Modal show={!!lineToDelete} onHide={handleCloseDeleteItemModal}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Request Line</Modal.Title>

@@ -1,34 +1,15 @@
-import { useEffect, useState } from "react";
 import type { IProduct } from "./IProduct";
 import { productAPI } from "./ProductAPI";
 import { Link } from "react-router-dom";
 import bootstrapIcons from "../assets/bootstrap-icons.svg";
-import toast from "react-hot-toast";
 import ProductList from "./ProductList";
+import { useQuery } from "@tanstack/react-query";
 
 function ProductsPage() {
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState<IProduct[]>([]);
-
-  async function loadProducts() {
-    setLoading(true);
-    try {
-      const data = await productAPI.list();
-      setProducts(data);
-    } catch (error: any) {
-      toast.error(error.message, { duration: 6000 });
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
-  function removeProduct(deleted: IProduct) {
-    setProducts(products.filter((product) => product.id !== deleted.id));
-  }
+  const { data: products = [], isPending } = useQuery({
+    queryKey: ["products"],
+    queryFn: productAPI.list,
+  });
 
   return (
     <section className="content container-fluid mx-5 my-2 py-4">
@@ -41,7 +22,8 @@ function ProductsPage() {
           Create A Product
         </Link>
       </div>
-      <ProductList products={products} loading={loading} onRemove={removeProduct} />
+
+      <ProductList products={products} loading={isPending} />
     </section>
   );
 }
