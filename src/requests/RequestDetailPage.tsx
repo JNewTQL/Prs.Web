@@ -144,7 +144,6 @@ function RequestDetailPage() {
           </form>
         </Modal.Body>
       </Modal>
-
       <Modal show={!!lineToDelete} onHide={handleCloseDeleteItemModal}>
         <Modal.Header closeButton>
           <Modal.Title>Delete Request Line</Modal.Title>
@@ -181,7 +180,7 @@ function RequestDetailPage() {
           {request?.status === "REVIEW" && (isReviewer || isOwnRequest) && (
             <>
               {isOwnRequest && (
-                <div className="alert alert-warning py-1 px-3 mb-0 me-2" role="alert">
+                <div className="alert alert-warning py-1 px-2 mb-0 me-2" role="alert">
                   You cannot approve or reject your own request.
                 </div>
               )}

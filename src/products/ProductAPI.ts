@@ -1,5 +1,6 @@
 import type { IProduct } from "./IProduct";
 import { BASE_URL, checkStatus, parseJSON } from "../utility/fetchUtilities";
+import { IPagedResult } from "../utility/IPagedResult";
 
 const url = `${BASE_URL}/products`;
 
@@ -7,6 +8,11 @@ export const productAPI = {
   list(): Promise<IProduct[]> {
     return fetch(url).then(checkStatus).then(parseJSON);
   },
+
+  listPaged(page: number, pageSize: number): Promise<IPagedResult<IProduct>> {
+    return fetch(`${url}/paged?page=${page}&pageSize=${pageSize}`).then(checkStatus).then(parseJSON);
+  },
+
   find(id: number): Promise<IProduct> {
     return fetch(`${url}/${id}`).then(checkStatus).then(parseJSON);
   },

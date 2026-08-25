@@ -4,6 +4,9 @@ import { Outlet } from "react-router-dom";
 import { createContext, useContext, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { IUser } from "./users/IUser";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools"; // ✨ NEW IMPORT!
+import { queryClient } from "./queryClient";
 
 export interface UserContextType {
   user: IUser | undefined;
@@ -27,15 +30,18 @@ function getPersistedUser() {
 function App() {
   const [user, setUser] = useState<IUser | undefined>(getPersistedUser());
   return (
-    <UserContext.Provider value={{ user, setUser }}>
-      <Toaster
-        toastOptions={{
-          success: { iconTheme: { primary: "#007aff", secondary: "white" } },
-          style: { maxWidth: 500 },
-        }}
-      />
-      <Outlet />
-    </UserContext.Provider>
+    <QueryClientProvider client={queryClient}>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Toaster
+          toastOptions={{
+            success: { iconTheme: { primary: "#007aff", secondary: "white" } },
+            style: { maxWidth: 500 },
+          }}
+        />
+        <Outlet />
+      </UserContext.Provider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
